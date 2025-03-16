@@ -9,7 +9,6 @@ export default function Layout({
     <Providers>
       <h1>Hello</h1>
       {children}
-      <button onClick={() => {}}>Sign out</button>
     </Providers>
   );
 }
