@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import outputs from "../../amplify_outputs.json";
 import getConfig from "next/config";
+import { Amplify } from "aws-amplify";
+import "@aws-amplify/ui-react/styles.css";
+import "./globals.css";
+
+Amplify.configure(outputs);
 
 const { publicRuntimeConfig } = getConfig();
 const version = publicRuntimeConfig?.version;

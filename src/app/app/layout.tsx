@@ -1,9 +1,4 @@
-// import { Authenticator } from "@aws-amplify/ui-react";
-// import { Amplify } from "aws-amplify";
-
-import "@aws-amplify/ui-react/styles.css";
-
-// Amplify.configure(outputs);
+import { Authenticator } from "@aws-amplify/ui-react";
 
 export default function Layout({
   children,
@@ -11,14 +6,14 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    // <Authenticator>
-    //   {({ signOut, user }) => (
-    <main>
-      {/* <h1>Hello {user?.username}</h1> */}
-      {children}
-      {/* <button onClick={signOut}>Sign out</button> */}
-    </main>
-    //   )}
-    // </Authenticator>
+    <Authenticator>
+      {({ signOut, user }) => (
+        <main>
+          <h1>Hello {user?.username}</h1>
+          {children}
+          <button onClick={signOut}>Sign out</button>
+        </main>
+      )}
+    </Authenticator>
   );
 }
