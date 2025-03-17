@@ -1,14 +1,9 @@
-import Providers from "@/components/Providers";
+import { ProvidersWithAuth } from "@/components/providers";
 
 export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <Providers>
-      <h1>Hello</h1>
-      {children}
-    </Providers>
-  );
+  return <ProvidersWithAuth>{children}</ProvidersWithAuth>;
 }
