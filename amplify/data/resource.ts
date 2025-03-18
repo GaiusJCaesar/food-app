@@ -7,11 +7,70 @@ specifies that any unauthenticated user can "create", "read", "update",
 and "delete" any "Todo" records.
 =========================================================================*/
 const schema = a.schema({
-  Todo: a
+  User: a
     .model({
-      content: a.string(),
+      userId: a.string().required(), // Cognito ID
+      name: a.string(),
+      accounts: a.hasMany("UserAccount", "userId"), // Fixes the missing relationship
     })
-    .authorization((allow) => [allow.guest()]),
+    .authorization((allow) => [allow.authenticated()]),
+
+  Account: a
+    .model({
+      accountId: a.id().required(),
+      name: a.string(),
+      users: a.hasMany("UserAccount", "accountId"),
+      meals: a.hasMany("Meal", "accountId"),
+      plans: a.hasMany("Plan", "accountId"),
+    })
+    .authorization((allow) => [allow.authenticated()]),
+
+  // ✅ Fix: Add belongsTo relationships to resolve error
+  UserAccount: a
+    .model({
+      id: a.id().required(),
+      userId: a.string().required(),
+      accountId: a.string().required(),
+      role: a.enum(["OWNER", "MEMBER"]), // Distinguishes owners from members
+      user: a.belongsTo("User", "userId"), // 🔹 Fix: Explicit reference to User
+      account: a.belongsTo("Account", "accountId"), // 🔹 Fix: Explicit reference to Account
+    })
+    .authorization((allow) => [allow.authenticated()]),
+
+  Meal: a
+    .model({
+      mealId: a.id().required(),
+      accountId: a.string().required(),
+      name: a.string().required(),
+      description: a.string(),
+      ingredients: a.string(),
+      method: a.string(),
+      time: a.string(),
+      plans: a.hasMany("PlanMeal", "mealId"),
+      account: a.belongsTo("Account", "accountId"), // Ensure meals belong to an account
+    })
+    .authorization((allow) => [allow.authenticated()]),
+
+  Plan: a
+    .model({
+      planId: a.id().required(),
+      accountId: a.string().required(),
+      name: a.string().required(),
+      date: a.string().required(),
+      meals: a.hasMany("PlanMeal", "planId"),
+      account: a.belongsTo("Account", "accountId"), // Ensure plans belong to an account
+    })
+    .authorization((allow) => [allow.authenticated()]),
+
+  PlanMeal: a
+    .model({
+      id: a.id().required(),
+      planId: a.string().required(),
+      mealId: a.string().required(),
+      plan: a.belongsTo("Plan", "planId"),
+      meal: a.belongsTo("Meal", "mealId"),
+    })
+    .authorization((allow) => [allow.authenticated()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
