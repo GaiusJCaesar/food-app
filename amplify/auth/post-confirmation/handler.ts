@@ -3,6 +3,7 @@ import { type Schema } from "../../data/resource";
 import { Amplify } from "aws-amplify";
 import { generateClient } from "aws-amplify/data";
 import { getAmplifyDataClientConfig } from "@aws-amplify/backend/function/runtime";
+// remove @ts-noncheck directive
 import { env } from "$amplify/env/post-confirmation";
 
 const { resourceConfig, libraryOptions } =
