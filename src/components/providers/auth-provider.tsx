@@ -7,11 +7,11 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { AuthUser, getCurrentUser } from "aws-amplify/auth";
-import { Hub } from "aws-amplify/utils";
+// import { AuthUser, getCurrentUser } from "aws-amplify/auth";
+// import { Hub } from "aws-amplify/utils";
 
 type AuthState = {
-  user: AuthUser | null;
+  user: null; // AuthUser |
   isAuthenticated: boolean | null;
   loading: boolean | null;
   refreshAuth: () => void;
@@ -31,8 +31,8 @@ function AuthProvider({ children }: PropsWithChildren) {
   const checkUser = useCallback(async () => {
     setLoading(true);
     try {
-      const authUser = await getCurrentUser();
-      setUser(authUser);
+      // const authUser = await getCurrentUser();
+      setUser(null);
     } catch {
       setUser(null);
     }
@@ -43,13 +43,13 @@ function AuthProvider({ children }: PropsWithChildren) {
     checkUser(); // Check auth status on mount
 
     // Listen for login/logout events
-    const unsubscribe = Hub.listen("auth", ({ payload }) => {
-      if (payload.event === "signedIn" || payload.event === "signedOut") {
-        checkUser();
-      }
-    });
+    // const unsubscribe = Hub.listen("auth", ({ payload }) => {
+    //   if (payload.event === "signedIn" || payload.event === "signedOut") {
+    //     checkUser();
+    //   }
+    // });
 
-    return () => unsubscribe();
+    // return () => unsubscribe();
   }, [checkUser]);
 
   return (
