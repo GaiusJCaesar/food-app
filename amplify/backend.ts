@@ -48,7 +48,7 @@ const apiRestPolicy = new Policy(apiStack, "RestApiPolicy", {
       actions: ["execute-api:Invoke"],
       resources: [
         `${restApi.arnForExecuteApi("*", "/user")}`,
-        `${restApi.arnForExecuteApi("*", "/user/*", "dev")}`,
+        `${restApi.arnForExecuteApi("*", "/user/*")}`,
       ],
     }),
   ],

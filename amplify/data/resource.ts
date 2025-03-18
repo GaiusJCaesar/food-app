@@ -1,4 +1,5 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
+import { postConfirmation } from "../auth/post-confirmation/resource";
 
 /*== STEP 1 ===============================================================
 The section below creates a Todo database table with a "content" field. Try
@@ -6,39 +7,45 @@ adding a new "isDone" field as a boolean. The authorization rule below
 specifies that any unauthenticated user can "create", "read", "update", 
 and "delete" any "Todo" records.
 =========================================================================*/
-const schema = a.schema({
-  User: a
-    .model({
-      userId: a.string().required(),
-      name: a.string(),
-      accounts: a.string().array(),
-      settings: a.json(),
-    })
-    .authorization((allow) => [allow.authenticated()]),
+const schema = a
+  .schema({
+    User: a
+      .model({
+        userId: a.string().required(),
+        name: a.string(),
+        email: a.string(),
+        accounts: a.string().array(),
+        settings: a.json(),
+      })
+      .authorization((allow) => [allow.authenticated()]),
 
-  Account: a
-    .model({
-      accountId: a.id().required(),
-      name: a.string(),
-      users: a.json().array(), // {userId, role, name}
-      meals: a.string().array(),
-      deprecatedMeals: a.string().array(),
-      plans: a.json().array(),
-    })
-    .authorization((allow) => [allow.authenticated()]),
+    Account: a
+      .model({
+        accountId: a.id().required(),
+        name: a.string(),
+        users: a.json().array(), // {userId, role, name}
+        meals: a.string().array(),
+        deprecatedMeals: a.string().array(),
+        plans: a.json().array(),
+      })
+      .authorization((allow) => [allow.authenticated()]),
 
-  Meal: a
-    .model({
-      mealId: a.id().required(),
-      accountId: a.string().required(),
-      name: a.string().required(),
-      description: a.string(),
-      ingredients: a.json().array(),
-      method: a.string().array(),
-      time: a.string(),
-    })
-    .authorization((allow) => [allow.authenticated()]),
-});
+    Meal: a
+      .model({
+        mealId: a.id().required(),
+        accountId: a.string().required(),
+        name: a.string().required(),
+        description: a.string(),
+        ingredients: a.json().array(),
+        method: a.string().array(),
+        time: a.string(),
+      })
+      .authorization((allow) => [allow.authenticated()]),
+  })
+  .authorization((allow) => [
+    allow.resource(postConfirmation),
+    allow.authenticated(),
+  ]);
 
 export type Schema = ClientSchema<typeof schema>;
 
