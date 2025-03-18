@@ -28,7 +28,7 @@ const restApi = new RestApi(apiStack, "food-app-api", {
   restApiName: "food-app-api-gw",
   deploy: true,
   defaultCorsPreflightOptions: {
-    allowOrigins: Cors.ALL_ORIGINS, // Restrict this to domains you trust
+    allowOrigins: [...Cors.ALL_ORIGINS, "http://localhost:3000"], // Restrict this to domains you trust
     allowMethods: Cors.ALL_METHODS, // Specify only the methods you need to allow
     allowHeaders: Cors.DEFAULT_HEADERS, // Specify only the headers you need to allow
   },

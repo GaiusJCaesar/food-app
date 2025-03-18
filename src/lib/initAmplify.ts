@@ -1,6 +1,7 @@
 import { Amplify } from "aws-amplify";
 import outputs from "../../amplify_outputs.json";
 import { parseAmplifyConfig } from "aws-amplify/utils";
+import { fetchAuthSession } from "aws-amplify/auth";
 
 const amplifyConfig = parseAmplifyConfig(outputs);
 
@@ -19,5 +20,21 @@ Amplify.configure(
       REST: outputs.custom.API,
     },
   },
-  { ssr: false }
+  {
+    ssr: false,
+    API: {
+      REST: {
+        headers: async () => {
+          const hdrs: Record<string, string> = {};
+          const session = await fetchAuthSession();
+          const token = session.tokens?.accessToken;
+
+          if (token) {
+            hdrs["Authorization"] = token.toString();
+          }
+          return hdrs;
+        },
+      },
+    },
+  }
 );
