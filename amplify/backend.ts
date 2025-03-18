@@ -86,11 +86,6 @@ userIdPath.addMethod("GET", userIntegration, userLambdaParams);
 userIdPath.addMethod("DELETE", userIntegration, userLambdaParams);
 userIdPath.addMethod("PUT", userIntegration, userLambdaParams);
 
-userIdPath.addProxy({
-  anyMethod: true,
-  defaultIntegration: userIntegration,
-});
-
 // add outputs to the configuration file
 backend.addOutput({
   custom: {
