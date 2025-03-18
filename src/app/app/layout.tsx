@@ -1,4 +1,4 @@
-import { ProvidersWithAuth } from "@/components/providers";
+import ProvidersWithAuth from "@/components/providers/cognito-provider";
 
 export default function Layout({
   children,

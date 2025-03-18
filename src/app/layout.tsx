@@ -3,8 +3,9 @@ import { Geist, Geist_Mono, Happy_Monkey } from "next/font/google";
 import "@/lib/initAmplify";
 import "@aws-amplify/ui-react/styles.css";
 import "@/styles/globals.css";
-import { AuthProvider, ThemeProvider } from "@/components/providers";
 import Navbar from "@/components/top-nav";
+import ThemeProvider from "@/components/providers/theme-provider";
+import AuthProvider from "@/components/providers/auth-provider";
 
 // const { publicRuntimeConfig } = getConfig();
 // const version = publicRuntimeConfig?.version;
