@@ -9,9 +9,10 @@ and "delete" any "Todo" records.
 const schema = a.schema({
   User: a
     .model({
-      userId: a.string().required(), // Cognito ID
+      userId: a.string().required(),
       name: a.string(),
-      accounts: a.hasMany("UserAccount", "userId"), // Fixes the missing relationship
+      accounts: a.string().array(),
+      settings: a.json(),
     })
     .authorization((allow) => [allow.authenticated()]),
 
@@ -19,21 +20,10 @@ const schema = a.schema({
     .model({
       accountId: a.id().required(),
       name: a.string(),
-      users: a.hasMany("UserAccount", "accountId"),
-      meals: a.hasMany("Meal", "accountId"),
-      plans: a.hasMany("Plan", "accountId"),
-    })
-    .authorization((allow) => [allow.authenticated()]),
-
-  // ✅ Fix: Add belongsTo relationships to resolve error
-  UserAccount: a
-    .model({
-      id: a.id().required(),
-      userId: a.string().required(),
-      accountId: a.string().required(),
-      role: a.enum(["OWNER", "MEMBER"]), // Distinguishes owners from members
-      user: a.belongsTo("User", "userId"), // 🔹 Fix: Explicit reference to User
-      account: a.belongsTo("Account", "accountId"), // 🔹 Fix: Explicit reference to Account
+      users: a.json().array(), // {userId, role, name}
+      meals: a.string().array(),
+      deprecatedMeals: a.string().array(),
+      plans: a.json().array(),
     })
     .authorization((allow) => [allow.authenticated()]),
 
@@ -43,32 +33,9 @@ const schema = a.schema({
       accountId: a.string().required(),
       name: a.string().required(),
       description: a.string(),
-      ingredients: a.string(),
-      method: a.string(),
+      ingredients: a.json().array(),
+      method: a.string().array(),
       time: a.string(),
-      plans: a.hasMany("PlanMeal", "mealId"),
-      account: a.belongsTo("Account", "accountId"), // Ensure meals belong to an account
-    })
-    .authorization((allow) => [allow.authenticated()]),
-
-  Plan: a
-    .model({
-      planId: a.id().required(),
-      accountId: a.string().required(),
-      name: a.string().required(),
-      date: a.string().required(),
-      meals: a.hasMany("PlanMeal", "planId"),
-      account: a.belongsTo("Account", "accountId"), // Ensure plans belong to an account
-    })
-    .authorization((allow) => [allow.authenticated()]),
-
-  PlanMeal: a
-    .model({
-      id: a.id().required(),
-      planId: a.string().required(),
-      mealId: a.string().required(),
-      plan: a.belongsTo("Plan", "planId"),
-      meal: a.belongsTo("Meal", "mealId"),
     })
     .authorization((allow) => [allow.authenticated()]),
 });

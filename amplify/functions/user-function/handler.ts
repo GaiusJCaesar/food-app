@@ -10,7 +10,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       "Access-Control-Allow-Headers": "*", // Specify only the headers you need to allow
     },
     body: JSON.stringify(
-      `Hello from myFunction! Your method was: ${event.httpMethod}\n`
+      `Hello from myFunction! Your method was: ${event.httpMethod}, and path was: ${event?.pathParameters?.["id"] || "Undefined"}`
     ),
   };
 };
