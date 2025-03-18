@@ -76,6 +76,42 @@ function Title({
   );
 }
 
+const linkVariants = cva("scroll-m-20 font-semibold tracking-tight", {
+  variants: {
+    variant: {
+      menuItem: "text-primary-foreground underline-offset-4 hover:underline",
+    },
+    isSelected: {
+      true: "text-highlight-foreground",
+      false: "",
+    },
+  },
+  defaultVariants: {
+    isSelected: false,
+    variant: "menuItem",
+  },
+});
+
+function Link({
+  className,
+  variant,
+  isSelected,
+  asChild = false,
+  ...props
+}: React.ComponentProps<"a"> &
+  VariantProps<typeof linkVariants> & {
+    asChild?: boolean;
+  }) {
+  const Comp = asChild ? Slot : "a";
+  return (
+    <Comp
+      data-slot={variant ? variant : "a"}
+      className={cn(linkVariants({ variant, isSelected, className }))}
+      {...props}
+    />
+  );
+}
+
 interface ListType {
   data?: PropsWithChildren["children"][];
 }
@@ -113,4 +149,4 @@ const TextTypes = {
   BlockQuote,
 };
 
-export { Paragraph, Title, TextTypes };
+export { Paragraph, Title, Link, TextTypes };

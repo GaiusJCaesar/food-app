@@ -3,7 +3,7 @@ import { Geist, Geist_Mono, Happy_Monkey } from "next/font/google";
 import "@/lib/initAmplify";
 import "@aws-amplify/ui-react/styles.css";
 import "@/styles/globals.css";
-import { ThemeProvider } from "@/components/providers";
+import { AuthProvider, ThemeProvider } from "@/components/providers";
 import Navbar from "@/components/top-nav";
 
 // const { publicRuntimeConfig } = getConfig();
@@ -46,8 +46,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
-          {children}
+          <AuthProvider>
+            <Navbar />
+            {children}
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
