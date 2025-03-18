@@ -27,7 +27,7 @@ Amplify.configure(
         headers: async () => {
           const hdrs: Record<string, string> = {};
           const session = await fetchAuthSession();
-          const token = session.tokens?.accessToken;
+          const token = session.tokens?.idToken;
 
           if (token) {
             hdrs["Authorization"] = token.toString();
