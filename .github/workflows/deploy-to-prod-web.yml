@@ -1,0 +1,28 @@
+name: Deploy to Production - Frontend
+
+on:
+  workflow_dispatch:
+
+jobs:
+  Frontend:
+    name: Frontend Deployment
+    runs-on: ubuntu-latest
+
+    env:
+      ENV: prod
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Pull Vercel Environment
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Project
+        run: vercel build --$ENV --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy to Vercel
+        run: vercel deploy --$ENV --token=${{ secrets.VERCEL_TOKEN }}
