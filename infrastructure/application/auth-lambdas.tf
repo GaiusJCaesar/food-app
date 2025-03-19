@@ -10,7 +10,7 @@ resource "aws_lambda_function" "auth_lambda" {
   role             = aws_iam_role.auth_lambda_assume_role.arn
   source_code_hash = data.aws_s3_object.auth_lambda.etag
 
-  handler = "index.js"
+  handler = "index.handler"
   runtime = "nodejs20.x"
 }
 
