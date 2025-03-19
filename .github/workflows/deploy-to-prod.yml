@@ -25,10 +25,10 @@ jobs:
               echo "Processing $dir"
               cd "$dir"
               npm run prebuild
-              npm run buildS
+              npm run build
               npm run package
               npm run zip
-              cd -  # Return to root directory
+              cd -
             fi
           done
 
