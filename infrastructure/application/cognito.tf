@@ -12,6 +12,10 @@ resource "aws_cognito_user_pool" "default_pool" {
     email_message        = "Welcome! Here's your code: {####}."
     email_subject        = "Here's your veriffication code!"
   }
+
+  lambda_config {
+    post_confirmation = aws_lambda_function.auth_lambda.arn
+  }
 }
 
 resource "aws_cognito_user_pool_client" "userpool_client" {

@@ -5,3 +5,5 @@ variable "env" {
 variable "project_name" {
   description = "Name of project"
 }
+
+variable "lambda_configs" {}

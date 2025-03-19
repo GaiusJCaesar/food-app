@@ -33,7 +33,8 @@ resource "aws_s3_bucket" "food_app" {
 }
 
 module "application" {
-  source       = "./application"
-  env          = var.env
-  project_name = var.project_name
+  source         = "./application"
+  env            = var.env
+  project_name   = var.project_name
+  lambda_configs = local.lambdas
 }
