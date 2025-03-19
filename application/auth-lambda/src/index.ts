@@ -1,12 +1,18 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
-import { handleReturn } from "./handleReturn";
+import { PostConfirmationTriggerHandler } from "aws-lambda";
 
-export const handler = async (
-  event: APIGatewayProxyEvent
-): Promise<APIGatewayProxyResult> => {
-  const result = {
-    result: event.body,
-  };
+export const handler: PostConfirmationTriggerHandler = async (
+  event,
+  context,
+  callback
+) => {
+  try {
+    const userSub = event.request.userAttributes.sub;
+    console.log(`User confirmed with sub: ${userSub}`);
 
-  return handleReturn({ body: result, statusCode: 200 });
+    // Return the event to continue the sign-up flow
+    return callback(null, event);
+  } catch (error) {
+    console.error("Error in post-confirmation trigger:", error);
+    return callback(error as Error);
+  }
 };
