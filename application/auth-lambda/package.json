@@ -7,7 +7,7 @@
     "prebuild": "npm install",
     "build": "tsc",
     "package": "npm prune --production && cp -R node_modules lib/node_modules/",
-    "zip": "mkdir -p ../dist && zip -q -r -X ../dist/$npm_package_name.zip .lib/** -x ./lib/_tests_/*"
+    "zip": "mkdir -p ../dist && zip -q -r -X ../dist/$npm_package_name.zip lib/** -x lib/_tests_/*"
   },
   "author": "",
   "license": "ISC",
