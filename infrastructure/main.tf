@@ -10,7 +10,7 @@ terraform {
 
   backend "s3" {
     bucket  = "438548768810-terraform-state-bucket"
-    key     = "food-app/${var.env}/terraform.tfstate"
+    key     = "food-app/terraform.tfstate"
     region  = "eu-west-2"
     encrypt = true
   }
