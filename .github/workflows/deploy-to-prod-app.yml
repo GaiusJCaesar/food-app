@@ -40,7 +40,7 @@ jobs:
 
       - name: Upload zip's to S3
         run: |
-          if [ -d .application/dist ]; then aws s3 cp ./application/dist s3://food-app-$ENV-deployment-bucket/lambdas --recursive --exclude="*" --include="*.zip" --content-type application/zip; else echo "Nothing in dist"; fi
+          aws s3 cp ./application/dist s3://food-app-$ENV-deployment-bucket/lambdas --recursive --exclude="*" --include="*.zip" --content-type application/zip
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
