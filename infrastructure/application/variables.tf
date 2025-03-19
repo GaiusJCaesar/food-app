@@ -3,5 +3,5 @@ variable "env" {
 }
 
 variable "project_name" {
-    description = "Name of project"
+  description = "Name of project"
 }

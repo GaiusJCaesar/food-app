@@ -1,40 +1,9 @@
-name: Deploy to Production
+name: Deploy to Production - Infrastructure
 
 on:
   workflow_dispatch:
 
 jobs:
-  application:
-    name: Application Deployment
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "npm"
-
-      - name: Install Dependencies & Build Lambdas
-        run: |
-          for dir in application/*-lambda/; do
-            if [ -f "$dir/package.json" ]; then
-              echo "Processing $dir"
-              cd "$dir"
-              npm run prebuild
-              npm run build
-              npm run package
-              npm run zip
-              cd -
-            fi
-          done
-
-      - name: List Packaged Files
-        run: ls -lh application/dist/
-
   terraform:
     name: Terraform Deployment
     runs-on: ubuntu-latest

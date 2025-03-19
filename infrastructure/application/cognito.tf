@@ -3,14 +3,14 @@ resource "aws_cognito_user_pool" "default_pool" {
   device_configuration {
     device_only_remembered_on_user_prompt = false
   }
-  username_attributes = ["email"]
+  username_attributes      = ["email"]
   auto_verified_attributes = ["email"]
-  
+
 
   verification_message_template {
     default_email_option = "CONFIRM_WITH_CODE"
-    email_message = "Welcome! Here's your code: {####}."
-    email_subject = "Here's your veriffication code!"
+    email_message        = "Welcome! Here's your code: {####}."
+    email_subject        = "Here's your veriffication code!"
   }
 }
 

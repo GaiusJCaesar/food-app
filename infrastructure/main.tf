@@ -6,6 +6,14 @@ terraform {
     }
   }
   required_version = "~> 1.7.3"
+
+
+  backend "s3" {
+    bucket  = "438548768810-terraform-state-bucket"
+    key     = "food-app/${var.env}/terraform.tfstate"
+    region  = "eu-west-2"
+    encrypt = true
+  }
 }
 
 provider "aws" {
@@ -13,19 +21,19 @@ provider "aws" {
 
   default_tags {
     tags = {
-        Service = "food-app"
-        Service_Name = "food-app"
-        Environment  = var.env
+      Service      = "food-app"
+      Service_Name = "food-app"
+      Environment  = var.env
     }
   }
 }
 
 resource "aws_s3_bucket" "food_app" {
-    bucket = "${var.project_name}-${var.env}"
+  bucket = "${var.project_name}-${var.env}-deployment-bucket"
 }
 
 module "application" {
-    source = "./application"
-    env = var.env
-    project_name = var.project_name
+  source       = "./application"
+  env          = var.env
+  project_name = var.project_name
 }
