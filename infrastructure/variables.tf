@@ -14,3 +14,7 @@ variable "runtime" {
 variable "env" {
   description = "Name of environment"
 }
+
+variable "web_domain" {
+  description = "website domain"
+}

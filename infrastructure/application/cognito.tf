@@ -21,7 +21,7 @@ resource "aws_cognito_user_pool" "default_pool" {
 resource "aws_cognito_user_pool_client" "userpool_client" {
   name                                 = "${var.project_name}-${var.env}-client"
   user_pool_id                         = aws_cognito_user_pool.default_pool.id
-  callback_urls                        = ["http://localhost:3000/"]
+  callback_urls                        = ["http://localhost:3000/", "http://localhost:3000/login", var.web_domain, "${var.web_domain}login"]
   allowed_oauth_flows_user_pool_client = true
   allowed_oauth_flows                  = ["code", "implicit"]
   allowed_oauth_scopes                 = ["email", "openid"]

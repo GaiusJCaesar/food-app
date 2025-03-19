@@ -9,3 +9,7 @@ variable "project_name" {
 variable "lambda_configs" {}
 
 variable "s3_bucket" {}
+
+variable "web_domain" {
+  description = "website domain"
+}
