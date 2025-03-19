@@ -19,3 +19,10 @@ provider "aws" {
     }
   }
 }
+
+
+module "auth" {
+    source = "./auth"
+    env = var.env
+    project_name = var.project_name
+}

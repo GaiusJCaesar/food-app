@@ -13,8 +13,8 @@ import Logo from "@/components/logos/food-logo";
 import { ReactNode } from "react";
 import { appConfigs, authHrefs, pageHrefs } from "@/constants/pageConfigs";
 import { Link, Title } from "./ui/text";
-import { useAuth } from "@/hooks/auth-hooks";
 import { usePathname } from "next/navigation";
+import { useAuth } from "react-oidc-context";
 
 interface NavbarLink {
   text: string;

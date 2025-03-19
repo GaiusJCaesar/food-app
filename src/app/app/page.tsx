@@ -1,8 +1,5 @@
-"use client";
-import { useAuth } from "@/hooks/auth-hooks";
+import DashboardUI from "@/ui/dashboard/dashboard-ui";
 
 export default function Page() {
-  const auth = useAuth();
-  console.log(auth);
-  return <>HELLO WORLD</>;
+  return <DashboardUI />
 }

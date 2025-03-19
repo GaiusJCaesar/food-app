@@ -1,9 +1,9 @@
-import ProvidersWithAuth from "@/components/providers/cognito-provider";
+import ProtectedRouteProvider from "@/components/providers/protected-provider";
 
 export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <ProvidersWithAuth>{children}</ProvidersWithAuth>;
+  return <ProtectedRouteProvider>{children}</ProtectedRouteProvider>;
 }

@@ -3,6 +3,10 @@ variable "region" {
   default     = "eu-west-2"
 }
 
+variable "project_name" {
+    description = "Name of project"
+}
+
 variable "runtime" {
   description = "Run time of lambdas"
 }

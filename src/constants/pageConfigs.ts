@@ -14,7 +14,7 @@ const pageHrefs: HrefConfigs = {
   },
   signup: {
     text: "Get started",
-    href: "/app",
+    href: "/login",
   },
   learnMore: {
     text: "Learn more",

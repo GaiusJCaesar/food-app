@@ -1,64 +1,17 @@
 "use client";
-import "@/lib/initAmplify";
-import React, {
-  createContext,
-  PropsWithChildren,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
-// import { AuthUser, getCurrentUser } from "aws-amplify/auth";
-// import { Hub } from "aws-amplify/utils";
+import React, { PropsWithChildren } from "react";
+import { AuthProvider as CognitoProvider } from "react-oidc-context";
 
-type AuthState = {
-  user: null; // AuthUser |
-  isAuthenticated: boolean | null;
-  loading: boolean | null;
-  refreshAuth: () => void;
+const cognitoAuthConfig = {
+  authority: "https://cognito-idp.eu-west-2.amazonaws.com/eu-west-2_ugsbcevJO",
+  client_id: "499dj66t3lqmmlt1jn2k97gain",
+  redirect_uri: "http://localhost:3000/",
+  response_type: "code",
+  scope: "email openid",
 };
 
-const AuthContext = createContext<AuthState>({
-  user: null,
-  loading: null,
-  isAuthenticated: null,
-  refreshAuth: () => {},
-});
-
 function AuthProvider({ children }: PropsWithChildren) {
-  const [user, setUser] = useState<AuthState["user"]>(null);
-  const [loading, setLoading] = useState<AuthState["loading"]>(true);
-
-  const checkUser = useCallback(async () => {
-    setLoading(true);
-    try {
-      // const authUser = await getCurrentUser();
-      setUser(null);
-    } catch {
-      setUser(null);
-    }
-    setLoading(false);
-  }, []);
-
-  useEffect(() => {
-    checkUser(); // Check auth status on mount
-
-    // Listen for login/logout events
-    // const unsubscribe = Hub.listen("auth", ({ payload }) => {
-    //   if (payload.event === "signedIn" || payload.event === "signedOut") {
-    //     checkUser();
-    //   }
-    // });
-
-    // return () => unsubscribe();
-  }, [checkUser]);
-
-  return (
-    <AuthContext.Provider
-      value={{ user, isAuthenticated: !!user, loading, refreshAuth: checkUser }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+  return <CognitoProvider {...cognitoAuthConfig}>{children}</CognitoProvider>;
 }
 
-export { AuthProvider as default, AuthContext };
+export { AuthProvider as default };
