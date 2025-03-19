@@ -1,5 +1,11 @@
+data "aws_s3_object" "auth_lambda" {
+  bucket = var.s3_bucket
+  key    = "lambdas/${var.lambda_configs["auth-lambda"].filename}"
+}
+
 resource "aws_lambda_function" "auth_lambda" {
-  filename      = var.lambda_configs["auth-lambda"].filename
+  s3_bucket     = data.aws_s3_object.auth_lambda.bucket
+  s3_key        = data.aws_s3_object.auth_lambda.key
   function_name = var.lambda_configs["auth-lambda"].function_name
   role          = aws_iam_role.auth_lambda_assume_role.arn
   handler       = "index.js"
