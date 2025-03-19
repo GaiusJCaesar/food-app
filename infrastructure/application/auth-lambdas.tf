@@ -4,12 +4,14 @@ data "aws_s3_object" "auth_lambda" {
 }
 
 resource "aws_lambda_function" "auth_lambda" {
-  s3_bucket     = data.aws_s3_object.auth_lambda.bucket
-  s3_key        = data.aws_s3_object.auth_lambda.key
-  function_name = var.lambda_configs["auth-lambda"].function_name
-  role          = aws_iam_role.auth_lambda_assume_role.arn
-  handler       = "index.js"
-  runtime       = "nodejs20.x"
+  s3_bucket        = data.aws_s3_object.auth_lambda.bucket
+  s3_key           = data.aws_s3_object.auth_lambda.key
+  function_name    = var.lambda_configs["auth-lambda"].function_name
+  role             = aws_iam_role.auth_lambda_assume_role.arn
+  source_code_hash = data.aws_s3_object.auth_lambda.etag
+
+  handler = "index.js"
+  runtime = "nodejs20.x"
 }
 
 resource "aws_lambda_permission" "auth_lambda" {
