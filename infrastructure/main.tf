@@ -20,9 +20,12 @@ provider "aws" {
   }
 }
 
+resource "aws_s3_bucket" "food_app" {
+    bucket = "${var.project_name}-${var.env}"
+}
 
-module "auth" {
-    source = "./auth"
+module "application" {
+    source = "./application"
     env = var.env
     project_name = var.project_name
 }
