@@ -3,11 +3,7 @@ resource "aws_api_gateway_rest_api" "api" {
   name        = "${var.project_name}-${var.env}-api"
   description = "API Gateway for ${var.project_name}-${var.env}"
 
-  body = templatefile("${path.root}/openapi.yml", {
-    auth_scope            = ""
-    user_lambda           = ""
-    cognito_user_pool_arn = ""
-  })
+  body = data.template_file.api.rendered
 
   endpoint_configuration {
     types = ["REGIONAL"]
@@ -39,4 +35,23 @@ resource "aws_api_gateway_stage" "env" {
   deployment_id = aws_api_gateway_deployment.env.id
   rest_api_id   = aws_api_gateway_rest_api.api.id
   stage_name    = var.env
+}
+
+data "aws_iam_policy_document" "api_policy_document" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type = "*"
+      identifiers = ["*"]
+    }
+
+    actions = ["execute-api:Invoke"]
+    resources = ["${aws_api_gateway_rest_api.api.execution_arn}/*"]
+  }
+}
+
+resource "aws_api_gateway_rest_api_policy" "api_policy" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  policy = data.aws_iam_policy_document.api_policy_document.json
 }
