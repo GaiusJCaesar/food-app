@@ -1,0 +1,101 @@
+openapi: 3.0.1
+info:
+  title: Food App API
+  description: API
+  version: 1.0.0
+
+paths:
+  /users/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+
+    options:
+      summary: CORS preflight
+      responses:
+        "200":
+          description: CORS preflight successful
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: |
+            {
+              "statusCode": 200
+            }
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Access-Control-Allow-Methods: "'GET, PUT, DELETE, OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization'"
+
+    get:
+      summary: Get user by ID
+      security:
+        - CognitoAuth:
+            - ${auth_scope}
+      responses:
+        "200":
+          description: User data returned
+        "405":
+          description: Method Not Allowed
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: ${user_lambda}
+
+    put:
+      summary: Update user by ID
+      security:
+        - CognitoAuth:
+            - ${auth_scope}
+      responses:
+        "200":
+          description: User updated
+        "405":
+          description: Method Not Allowed
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: ${user_lambda}
+
+    delete:
+      summary: Delete user by ID
+      security:
+        - CognitoAuth:
+            - ${auth_scope}
+      responses:
+        "200":
+          description: User deleted
+        "405":
+          description: Method Not Allowed
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        httpMethod: POST
+        uri: ${user_lambda}
+
+components:
+  securitySchemes:
+    CognitoAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+      x-amazon-apigateway-authtype: cognito_user_pools
+      x-amazon-apigateway-authorizer:
+        type: cognito_user_pools
+        providerARNs:
+          - ${cognito_user_pool_arn}

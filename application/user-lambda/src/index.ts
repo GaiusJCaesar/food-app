@@ -11,12 +11,6 @@ export const handler = async (
         statusCode: 200,
       });
 
-    case "POST":
-      return handleReturn({
-        body: { message: "POST request received" },
-        statusCode: 200,
-      });
-
     case "PUT":
       return handleReturn({
         body: { message: "PUT request received" },
@@ -28,6 +22,7 @@ export const handler = async (
         body: { message: "DELETE request received" },
         statusCode: 200,
       });
+
     default:
       return handleReturn({
         body: { error: "Method Not Allowed" },

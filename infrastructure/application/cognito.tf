@@ -24,11 +24,23 @@ resource "aws_cognito_user_pool_client" "userpool_client" {
   callback_urls                        = ["http://localhost:3000/", "http://localhost:3000/login", var.web_domain, "${var.web_domain}login"]
   allowed_oauth_flows_user_pool_client = true
   allowed_oauth_flows                  = ["code", "implicit"]
-  allowed_oauth_scopes                 = ["email", "openid"]
+  allowed_oauth_scopes                 = flatten("email", "openid", flatten(aws_cognito_resource_server.resource.scope_identifiers))
   supported_identity_providers         = ["COGNITO"]
 }
 
 resource "aws_cognito_user_pool_domain" "domain" {
   domain       = "auth-${var.project_name}"
+  user_pool_id = aws_cognito_user_pool.default_pool.id
+}
+
+resource "aws_cognito_resource_server" "resource" {
+  identifier = "urn:${var.project_name}:resource-server"
+  name       = "${var.project_name}-${var.env}-resource"
+
+  scope {
+    scope_name        = "API GW"
+    scope_description = "Scope to access API GW"
+  }
+
   user_pool_id = aws_cognito_user_pool.default_pool.id
 }
