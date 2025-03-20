@@ -11,7 +11,7 @@ resource "aws_api_gateway_rest_api" "api" {
 }
 
 data "template_file" "api" {
-  template = file("${path.root}/api.yml")
+  template = file("${path.module}/api.yml")
   vars = {
     auth_scope            = aws_cognito_resource_server.resource.scope_identifiers
     user_lambda           = aws_lambda_function.user_lambda.arn
