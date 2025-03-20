@@ -1,10 +1,10 @@
 "use client";
 import { Title } from "@/components/ui/text";
-import { useAuth } from "react-oidc-context";
+import { useRedirect } from "@/hooks/useRedirect";
 
 const DashboardUI = () => {
-  const { user } = useAuth();
-  console.log(user?.profile);
+  useRedirect();
+
   return (
     <main className="layout">
       <Title color="highlight" className="happy-monkey">

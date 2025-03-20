@@ -7,7 +7,13 @@ data "aws_iam_policy_document" "auth_lambda_assume_role" {
       identifiers = ["lambda.amazonaws.com"]
     }
 
-    actions = ["sts:AssumeRole"]
+    actions = ["sts:AssumeRole", "dynamodb:GetItem",
+          "dynamodb:PutItem",
+          "dynamodb:Query",
+          "dynamodb:Scan",
+          "dynamodb:UpdateItem"]
+
+          resources = ["*"]
   }
 }
 

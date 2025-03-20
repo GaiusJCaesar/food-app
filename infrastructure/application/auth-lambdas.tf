@@ -12,6 +12,12 @@ resource "aws_lambda_function" "auth_lambda" {
 
   handler = "index.handler"
   runtime = "nodejs20.x"
+
+  environment {
+    variables = {
+      TABLE_NAME = aws_dynamodb_table.users.name
+    }
+  }
 }
 
 resource "aws_lambda_permission" "auth_lambda" {
