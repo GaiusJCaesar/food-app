@@ -38,7 +38,7 @@ resource "aws_cognito_resource_server" "resource" {
   name       = "${var.project_name}-${var.env}-resource"
 
   scope {
-    scope_name        = "API GW"
+    scope_name        = "api-gw-${var.env}"
     scope_description = "Scope to access API GW"
   }
 
