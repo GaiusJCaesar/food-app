@@ -14,7 +14,7 @@ data "template_file" "api" {
   template = file("${path.module}/api.yml")
   vars = {
     auth_scope            = aws_cognito_resource_server.resource.scope_identifiers[0]
-    user_lambda           = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${aws_lambda_function.users_lambda.arn}/invocations"
+    user_lambda           = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${aws_lambda_function.user_lambda.arn}/invocations"
     cognito_user_pool_arn = aws_cognito_user_pool.default_pool.arn
   }
 }
