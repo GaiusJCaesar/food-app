@@ -13,7 +13,7 @@ resource "aws_api_gateway_rest_api" "api" {
 data "template_file" "api" {
   template = file("${path.module}/api.yml")
   vars = {
-    auth_scope            = aws_cognito_resource_server.resource.scope_identifiers
+    auth_scope            = aws_cognito_resource_server.resource.scope_identifiers[0]
     user_lambda           = aws_lambda_function.user_lambda.arn
     cognito_user_pool_arn = aws_cognito_user_pool.default_pool.arn
   }
@@ -42,16 +42,16 @@ data "aws_iam_policy_document" "api_policy_document" {
     effect = "Allow"
 
     principals {
-      type = "*"
+      type        = "*"
       identifiers = ["*"]
     }
 
-    actions = ["execute-api:Invoke"]
+    actions   = ["execute-api:Invoke"]
     resources = ["${aws_api_gateway_rest_api.api.execution_arn}/*"]
   }
 }
 
 resource "aws_api_gateway_rest_api_policy" "api_policy" {
   rest_api_id = aws_api_gateway_rest_api.api.id
-  policy = data.aws_iam_policy_document.api_policy_document.json
+  policy      = data.aws_iam_policy_document.api_policy_document.json
 }
