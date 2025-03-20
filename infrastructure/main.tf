@@ -39,4 +39,5 @@ module "application" {
   lambda_configs = local.lambdas
   s3_bucket      = aws_s3_bucket.food_app.bucket
   web_domain     = var.web_domain
+  region         = var.region
 }
