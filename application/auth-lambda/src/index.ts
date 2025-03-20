@@ -26,6 +26,8 @@ export const handler: PostConfirmationTriggerHandler = async (
 
     await dynamodb.put(params).promise();
 
+    console.log("User submitted");
+
     return callback(null, event);
   } catch (error) {
     console.error("Error in post-confirmation trigger:", error);
