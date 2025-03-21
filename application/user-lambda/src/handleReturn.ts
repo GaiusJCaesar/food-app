@@ -7,7 +7,11 @@ const handleReturn = ({
   body: unknown;
   statusCode: number;
 }) => {
-  const headers = {};
+  const headers = {
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "*",
+  };
   const transformedBody = JSON.stringify(body);
 
   return {
