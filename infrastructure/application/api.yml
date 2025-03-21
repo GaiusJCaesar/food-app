@@ -46,8 +46,7 @@ paths:
     get:
       summary: Get user by ID
       security:
-        - CognitoAuth:
-            - ${auth_scope}
+        - CognitoAuth: []
       responses:
         "200":
           description: User data returned
@@ -61,8 +60,7 @@ paths:
     put:
       summary: Update user by ID
       security:
-        - CognitoAuth:
-            - ${auth_scope}
+        - CognitoAuth: []
       responses:
         "200":
           description: User updated
@@ -76,8 +74,7 @@ paths:
     delete:
       summary: Delete user by ID
       security:
-        - CognitoAuth:
-            - ${auth_scope}
+        - CognitoAuth: []
       responses:
         "200":
           description: User deleted
@@ -91,8 +88,7 @@ paths:
 components:
   securitySchemes:
     CognitoAuth:
-      type: http
-      scheme: bearer
+      type: apiKey
       name: Authorization
       in: header
       x-amazon-apigateway-authtype: cognito_user_pools

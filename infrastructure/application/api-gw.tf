@@ -55,3 +55,11 @@ resource "aws_api_gateway_rest_api_policy" "api_policy" {
   rest_api_id = aws_api_gateway_rest_api.api.id
   policy      = data.aws_iam_policy_document.api_policy_document.json
 }
+
+resource "aws_api_gateway_authorizer" "cognito_auth" {
+  name          = "${var.project_name}-${var.env}-authorizer"
+  rest_api_id   = aws_api_gateway_rest_api.api.id
+  type          = "COGNITO_USER_POOLS"
+  provider_arns = [aws_cognito_user_pool.default_pool.arn]
+  identity_source = "method.request.header.Authorization"
+}
