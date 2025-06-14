@@ -1,23 +1,42 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResult } from "aws-lambda";
 import { handleReturn } from "./handleReturn";
+import { getMapper } from "./mapper/get-mapper";
+import { putMapper } from "./mapper/put-mapper";
 
 export const handler = async (
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResult> => {
   const httpMethod = event.requestContext.http.method;
-
+  const pathParams = event.pathParameters;
+  const body = JSON.parse(event.body ?? "{}");
   switch (httpMethod) {
     case "GET":
-      return handleReturn({
-        body: { message: "GET request received" },
-        statusCode: 200,
-      });
+      try {
+        const data = await getMapper(pathParams?.["id"]);
+        return handleReturn({
+          body: { data },
+          statusCode: 200,
+        });
+      } catch (error) {
+        return handleReturn({
+          body: { error, message: "ERROR: Not found." },
+          statusCode: 404,
+        });
+      }
 
     case "PUT":
-      return handleReturn({
-        body: { message: "PUT request received" },
-        statusCode: 200,
-      });
+      try {
+        const data = await putMapper(pathParams?.["id"], body);
+        return handleReturn({
+          body: { data },
+          statusCode: 200,
+        });
+      } catch (error) {
+        return handleReturn({
+          body: { error, message: "ERROR: Not found." },
+          statusCode: 404,
+        });
+      }
 
     case "DELETE":
       return handleReturn({
@@ -27,7 +46,7 @@ export const handler = async (
 
     default:
       return handleReturn({
-        body: { error: "Method Not Allowed" },
+        body: { message: "Method Not Allowed" },
         statusCode: 405,
       });
   }
