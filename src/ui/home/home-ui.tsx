@@ -12,7 +12,7 @@ const HomeUI = () => {
       <div>
         <Title>Welcome to</Title>
         <Title color="highlight" className="happy-monkey">
-          Foodies
+          Din Dins
         </Title>
         <Link href={pageHrefs["signup"].href}>
           <Button variant="outline" className="w-full mt-4">

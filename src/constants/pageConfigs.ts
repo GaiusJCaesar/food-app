@@ -1,7 +1,7 @@
 type HrefConfigs = Record<string, Record<"href" | "text", string>>;
 
 const appConfigs = {
-  title: "Foodies",
+  title: "Din Dins",
   description: "Planning your meals made easy!",
   href: "/",
 };

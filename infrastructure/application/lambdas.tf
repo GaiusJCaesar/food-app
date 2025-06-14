@@ -1,8 +1,3 @@
-data "aws_s3_object" "user_lambda" {
-  bucket = var.s3_bucket
-  key    = "lambdas/${var.lambda_configs["user-lambda"].filename}"
-}
-
 resource "aws_lambda_function" "user_lambda" {
   s3_bucket        = data.aws_s3_object.user_lambda.bucket
   s3_key           = data.aws_s3_object.user_lambda.key

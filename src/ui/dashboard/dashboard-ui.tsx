@@ -20,7 +20,7 @@ const DashboardUI = () => {
   return (
     <main className="layout">
       <Title color="highlight" className="happy-monkey">
-        Foodies
+        Din Dins
       </Title>
     </main>
   );

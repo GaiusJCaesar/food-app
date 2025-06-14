@@ -1,3 +1,4 @@
+"use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { useAuth } from "react-oidc-context";
