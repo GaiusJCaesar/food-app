@@ -1,10 +1,12 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import { APIGatewayProxyEventV2, APIGatewayProxyResult } from "aws-lambda";
 import { handleReturn } from "./handleReturn";
 
 export const handler = async (
-  event: APIGatewayProxyEvent
+  event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResult> => {
-  switch (event.httpMethod) {
+  const httpMethod = event.requestContext.http.method;
+
+  switch (httpMethod) {
     case "GET":
       return handleReturn({
         body: { message: "GET request received" },
