@@ -46,6 +46,7 @@ resource "aws_iam_role_policy_attachment" "user_lambda_logs" {
   role       = aws_iam_role.user_lambda_assume_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
+
 resource "aws_lambda_permission" "user_lambda" {
   statement_id  = "AllowExecutionFromAPiGateway"
   action        = "lambda:InvokeFunction"
