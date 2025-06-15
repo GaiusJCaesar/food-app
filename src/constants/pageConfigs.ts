@@ -36,17 +36,24 @@ const authHrefs: HrefConfigs = {
     text: "Settings",
   },
   menu: {
-    text: "Menu",
-    href: "/app/menu",
+    text: "Cookbook",
+    href: "/app/cookbook",
   },
   plan: {
-    text: "Plan",
-    href: "/app/plan",
+    text: "Planner",
+    href: "/app/planner",
   },
   lists: {
-    text: "Lists",
-    href: "/app/lists",
+    text: "Groceries",
+    href: "/app/groceries",
   },
 };
 
-export { pageHrefs, authHrefs, appConfigs };
+const otherHrefs: HrefConfigs = {
+  createAccount: {
+    text: "Your account",
+    href: "/app/create-account",
+  },
+};
+
+export { pageHrefs, authHrefs, appConfigs, otherHrefs };

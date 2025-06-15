@@ -37,7 +37,7 @@ data "aws_iam_policy_document" "auth_lambda_dynamo_policy" {
       "dynamodb:Scan",
       "dynamodb:UpdateItem"
     ]
-    resources = [aws_dynamodb_table.users.arn]
+    resources = [aws_dynamodb_table.users.arn, aws_dynamodb_table.accounts.arn]
   }
 }
 

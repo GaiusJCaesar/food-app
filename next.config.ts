@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
   publicRuntimeConfig: {
     version,
   },
+  env: {
+    API_URL: "https://7m8fbvpb9a.execute-api.eu-west-2.amazonaws.com",
+  },
 };
 
 export default nextConfig;

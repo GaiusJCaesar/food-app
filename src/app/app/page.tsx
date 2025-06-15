@@ -1,5 +1,5 @@
-import DashboardUI from "@/ui/dashboard/dashboard-ui";
+import DashboardPage from "@/ui/dashboard/dashboard-page";
 
 export default function Page() {
-  return <DashboardUI />
+  return <DashboardPage />;
 }

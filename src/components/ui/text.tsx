@@ -7,6 +7,7 @@ const paraVariants = cva("", {
   variants: {
     variant: {
       default: "leading-7 [&:not(:first-child)]:mt-6",
+      medium: "leading-7 [&:not(:first-child)]:mt-3",
       large: "text-lg font-semibold",
       small: "text-sm font-medium leading-none",
       lead: "text-xl text-muted-foreground",

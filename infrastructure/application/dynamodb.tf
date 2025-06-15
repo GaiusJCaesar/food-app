@@ -19,3 +19,25 @@ resource "aws_dynamodb_table" "users" {
     projection_type = "KEYS_ONLY"
   }
 }
+
+resource "aws_dynamodb_table" "accounts" {
+  name         = "${var.project_name}-${var.env}-accounts-table"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "id"
+
+  attribute {
+    name = "id"
+    type = "S"
+  }
+
+  attribute {
+    name = "name"
+    type = "S"
+  }
+
+  global_secondary_index {
+    name            = "name-index"
+    hash_key        = "name"
+    projection_type = "KEYS_ONLY"
+  }
+}

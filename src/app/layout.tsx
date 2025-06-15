@@ -4,6 +4,7 @@ import "@/styles/globals.css";
 import Navbar from "@/components/top-nav";
 import ThemeProvider from "@/components/providers/theme-provider";
 import AuthProvider from "@/components/providers/auth-provider";
+import QueryProvider from "@/components/providers/query-provider";
 
 // const { publicRuntimeConfig } = getConfig();
 // const version = publicRuntimeConfig?.version;
@@ -45,10 +46,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AuthProvider>
-            <Navbar />
-            {children}
-          </AuthProvider>
+          <QueryProvider>
+            <AuthProvider>
+              <Navbar />
+              {children}
+            </AuthProvider>
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>
