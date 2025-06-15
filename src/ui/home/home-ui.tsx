@@ -3,10 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Title, Paragraph, TextTypes } from "@/components/ui/text";
 import { pageHrefs } from "@/constants/pageConfigs";
+import { useRedirect } from "@/hooks/useRedirect";
 import Link from "next/link";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 
 const HomeUI = () => {
+  useRedirect();
   return (
     <main className="layout">
       <div>

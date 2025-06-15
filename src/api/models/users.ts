@@ -4,5 +4,6 @@ export type User = {
   email: string;
   firstName?: string;
   lastName?: string;
+  account?: string;
   accounts?: string[];
 };

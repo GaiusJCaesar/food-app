@@ -17,12 +17,12 @@ interface JourneyProps {
 }
 
 function getJourney({ journey, includeId, pathId }: JourneyProps) {
-  const id = pathId || getUser()?.profile.sub;
+  const id = includeId ? getUser()?.profile.sub : pathId;
   switch (journey) {
     case "users":
-      return `/users${includeId ? `/${id}` : ""}`;
+      return `/users${id ? `/${id}` : ""}`;
     case "accounts":
-      return `/accounts${includeId ? `/${id}` : ""}`;
+      return `/accounts${id ? `/${id}` : ""}`;
     default:
       return "/";
   }

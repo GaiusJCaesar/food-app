@@ -41,3 +41,25 @@ resource "aws_dynamodb_table" "accounts" {
     projection_type = "KEYS_ONLY"
   }
 }
+
+resource "aws_dynamodb_table" "meals" {
+  name         = "${var.project_name}-${var.env}-meals-table"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "id"
+
+  attribute {
+    name = "id"
+    type = "S"
+  }
+
+  attribute {
+    name = "title"
+    type = "S"
+  }
+
+  global_secondary_index {
+    name            = "title-index"
+    hash_key        = "title"
+    projection_type = "KEYS_ONLY"
+  }
+}

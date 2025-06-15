@@ -1,10 +1,13 @@
 import { fetcher } from "@/utils/fetchService";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { User } from "../models/users";
-import { APIError } from "../models/defaults";
+import { APIError, QueryOptions } from "../models/defaults";
 
-export const useUserQuery = (): UseQueryResult<User, APIError> => {
+export const useUserQuery = ({
+  ...options
+}: QueryOptions<User>): UseQueryResult<User, APIError> => {
   return useQuery({
+    ...options,
     queryKey: ["user"],
     queryFn: async () =>
       (await fetcher({
