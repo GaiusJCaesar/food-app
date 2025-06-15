@@ -27,8 +27,8 @@ resource "aws_lambda_function" "account_lambda" {
 
   environment {
     variables = {
-      ACCOUNTS_TABLE  = aws_dynamodb_table.accounts.name
-      USERS_TABLE     = aws_dynamodb_table.users.name
+      ACCOUNTS_TABLE = aws_dynamodb_table.accounts.name
+      USERS_TABLE    = aws_dynamodb_table.users.name
     }
   }
 }

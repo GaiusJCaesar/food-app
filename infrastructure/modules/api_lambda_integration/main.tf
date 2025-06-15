@@ -31,7 +31,7 @@ resource "aws_apigatewayv2_route" "lambda_routes" {
   route_key = each.key
   target    = "integrations/${aws_apigatewayv2_integration.lambda.id}"
 
-  authorizer_id = var.authorizer_id
+  authorizer_id      = var.authorizer_id
   authorization_type = "JWT"
 }
 
@@ -40,5 +40,5 @@ resource "aws_lambda_permission" "apigw" {
   action        = "lambda:InvokeFunction"
   function_name = var.lambda_function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn = "${data.aws_apigatewayv2_api.this.execution_arn}/*/*"
+  source_arn    = "${data.aws_apigatewayv2_api.this.execution_arn}/*/*"
 }

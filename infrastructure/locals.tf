@@ -9,8 +9,8 @@ locals {
       function_name = "user-lambda"
     }
     "account-lambda" = {
-      filename       = "account-lambda.zip"
-      function_name  = "account-lambda"
+      filename      = "account-lambda.zip"
+      function_name = "account-lambda"
     }
   }
 }

@@ -9,11 +9,11 @@ module "users_routes" {
   routes = [
     {
       path    = "/users"
-      methods = ["POST"]  # Single POST method on /users path
+      methods = ["POST"] # Single POST method on /users path
     },
     {
       path    = "/users/{id}"
-      methods = ["GET", "PUT", "DELETE"]  # Multiple methods on /users/{id}
+      methods = ["GET", "PUT", "DELETE"] # Multiple methods on /users/{id}
     }
   ]
 }
@@ -29,11 +29,11 @@ module "accounts_routes" {
   routes = [
     {
       path    = "/accounts"
-      methods = ["POST"]  # Single POST method on /accounts path
+      methods = ["POST"] # Single POST method on /accounts path
     },
     {
       path    = "/accounts/{id}"
-      methods = ["GET", "PUT", "DELETE"]  # Multiple methods on /accounts/{id}
+      methods = ["GET", "PUT", "DELETE"] # Multiple methods on /accounts/{id}
     }
   ]
 }
