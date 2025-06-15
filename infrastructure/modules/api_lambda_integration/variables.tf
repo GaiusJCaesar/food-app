@@ -20,3 +20,7 @@ variable "routes" {
     methods = list(string)
   }))
 }
+
+variable "authorizer_id" {
+  type = string
+}

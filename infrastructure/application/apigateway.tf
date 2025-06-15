@@ -10,6 +10,18 @@ resource "aws_apigatewayv2_api" "shared_api" {
   }
 }
 
+resource "aws_apigatewayv2_authorizer" "cognito" {
+  name                       = "${var.project_name}-${var.env}-authorizer"
+  api_id                     = aws_apigatewayv2_api.shared_api.id
+  authorizer_type            = "JWT"
+  identity_sources           = ["$request.header.Authorization"]
+
+  jwt_configuration {
+    audience = [aws_cognito_user_pool_client.userpool_client.id]
+    issuer   = "https://cognito-idp.${var.region}.amazonaws.com/${aws_cognito_user_pool.default_pool.id}"
+  }
+}
+
 resource "aws_apigatewayv2_stage" "default" {
   api_id      = aws_apigatewayv2_api.shared_api.id
   name        = "$default"
