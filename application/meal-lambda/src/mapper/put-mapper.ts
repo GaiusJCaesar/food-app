@@ -8,68 +8,82 @@ const ACCOUNTS_TABLE =
 interface Meal {
   id: string;
   accountId: string;
-  title: string;
-  description?: string;
   isFavourite?: boolean;
-  cuisine?: string;
-  dish?: string;
-  method?: unknown;
-  ingredients?: unknown;
   [key: string]: unknown;
 }
 
 const putMapper = async (input: Meal): Promise<Meal> => {
-  if (!input.id || !input.accountId || !input.title) {
-    throw new Error("Missing required fields: 'id', 'accountId', or 'title'");
+  if (!input.id || !input.accountId) {
+    throw new Error("Missing required fields: 'id' or 'accountId'");
   }
 
-  try {
-    // 1. Update the meal item
-    await dynamodb
-      .put({
-        TableName: MEALS_TABLE,
-        Item: input,
-        ConditionExpression: "attribute_exists(id)", // only update if it exists
-      })
-      .promise();
+  const mealId = input.id;
+  const accountId = input.accountId;
+  const isFav = input.isFavourite === true;
 
-    // 2. Get current favourites list
+  // Remove keys we do not want to update directly
+  const updateInput: Partial<Meal> = { ...input };
+
+  delete updateInput.id;
+  delete updateInput.accountId;
+
+  try {
+    // 1. Dynamically build UpdateExpression
+    const expressionParts = Object.keys(updateInput).map(
+      (key) => `#${key} = :${key}`
+    );
+    const ExpressionAttributeNames = Object.fromEntries(
+      Object.keys(updateInput).map((key) => [`#${key}`, key])
+    );
+    const ExpressionAttributeValues = Object.fromEntries(
+      Object.entries(updateInput).map(([key, value]) => [`:${key}`, value])
+    );
+
+    if (expressionParts.length > 0) {
+      await dynamodb
+        .update({
+          TableName: MEALS_TABLE,
+          Key: { id: mealId },
+          UpdateExpression: `SET ${expressionParts.join(", ")}`,
+          ConditionExpression: "attribute_exists(id)",
+          ExpressionAttributeNames,
+          ExpressionAttributeValues,
+        })
+        .promise();
+    }
+
+    // 2. Update favourites
     const accountData = await dynamodb
       .get({
         TableName: ACCOUNTS_TABLE,
-        Key: { id: input.accountId },
+        Key: { id: accountId },
         ProjectionExpression: "favourites",
       })
       .promise();
 
     const currentFavourites: string[] = accountData.Item?.favourites || [];
-    const mealId = input.id;
-    const isFav = input.isFavourite === true;
-
-    // 3. Prepare update for favourites list
-    let favourites: string[] = currentFavourites;
-
     const alreadyFav = currentFavourites.includes(mealId);
 
+    let updatedFavourites = currentFavourites;
+
     if (isFav && !alreadyFav) {
-      favourites = [...currentFavourites, mealId];
+      updatedFavourites = [...currentFavourites, mealId];
     } else if (!isFav && alreadyFav) {
-      favourites = currentFavourites.filter((id) => id !== mealId);
+      updatedFavourites = currentFavourites.filter((id) => id !== mealId);
     }
 
-    // 4. Update the favourites list
     await dynamodb
       .update({
         TableName: ACCOUNTS_TABLE,
-        Key: { id: input.accountId },
+        Key: { id: accountId },
         UpdateExpression: "SET favourites = :favs",
         ExpressionAttributeValues: {
-          ":favs": favourites,
+          ":favs": updatedFavourites,
         },
       })
       .promise();
 
-    return input;
+    return { ...input, favourites: updatedFavourites };
   } catch (error) {
     console.error("Failed to update meal:", error);
     throw new Error("Failed to update meal");
