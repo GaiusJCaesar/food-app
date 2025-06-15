@@ -5,15 +5,24 @@ import { API_URL } from "@/constants/apiConfigs";
 interface props {
   method?: RequestInit["method"];
   body?: RequestInit["body"];
-  journey: "users";
+  journey: "users" | "accounts";
+  pathId?: string;
   includeId?: boolean;
 }
 
-function getJourney(journey: props["journey"], includeId: props["includeId"]) {
-  const id = getUser()?.profile.sub;
+interface JourneyProps {
+  journey: props["journey"];
+  includeId: props["includeId"];
+  pathId: props["pathId"];
+}
+
+function getJourney({ journey, includeId, pathId }: JourneyProps) {
+  const id = pathId || getUser()?.profile.sub;
   switch (journey) {
     case "users":
       return `/users${includeId ? `/${id}` : ""}`;
+    case "accounts":
+      return `/accounts${includeId ? `/${id}` : ""}`;
     default:
       return "/";
   }
@@ -24,17 +33,21 @@ export const fetcher = async ({
   body,
   journey,
   includeId,
+  pathId,
 }: props) => {
   const token = getUser()?.id_token;
   const headers: RequestInit["headers"] = {
     Authorization: `Bearer ${token}`,
   };
 
-  const result = await fetch(API_URL + getJourney(journey, includeId), {
-    method,
-    body,
-    headers,
-  });
+  const result = await fetch(
+    API_URL + getJourney({ journey, includeId, pathId }),
+    {
+      method,
+      body,
+      headers,
+    }
+  );
   if (method === "GET" && result.ok) {
     const json = await result.json();
     return json?.data || json;

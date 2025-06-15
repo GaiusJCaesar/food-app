@@ -12,6 +12,7 @@ const paraVariants = cva("", {
       small: "text-sm font-medium leading-none",
       lead: "text-xl text-muted-foreground",
       muted: "text-sm text-muted-foreground",
+      error: "text-sm text-destructive",
     },
   },
   defaultVariants: {
