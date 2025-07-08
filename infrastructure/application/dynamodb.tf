@@ -58,8 +58,8 @@ resource "aws_dynamodb_table" "meals" {
   }
 
   global_secondary_index {
-    name            = "title-index"
-    hash_key        = "title"
-    projection_type = "KEYS_ONLY"
+    name            = "accountId-index"
+    hash_key        = "accountId"
+    projection_type = "ALL" # or "KEYS_ONLY" or "INCLUDE" if you want to limit
   }
 }

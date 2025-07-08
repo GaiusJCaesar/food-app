@@ -6,6 +6,7 @@ interface props {
   method?: RequestInit["method"];
   body?: RequestInit["body"];
   journey: "users" | "accounts" | "meals";
+  queryParams?: Record<string, string>;
   pathId?: string;
   includeId?: boolean;
 }
@@ -30,11 +31,21 @@ function getJourney({ journey, includeId, pathId }: JourneyProps) {
   }
 }
 
+const buildQueryString = (queryParams?: props["queryParams"]): string => {
+  if (!queryParams || Object.keys(queryParams).length === 0) {
+    return "";
+  }
+
+  const query = new URLSearchParams(queryParams).toString();
+  return `?${query}`;
+};
+
 export const fetcher = async ({
   method = "GET",
   body,
   journey,
   includeId,
+  queryParams,
   pathId,
 }: props) => {
   const token = getUser()?.id_token;
@@ -42,14 +53,16 @@ export const fetcher = async ({
     Authorization: `Bearer ${token}`,
   };
 
-  const result = await fetch(
-    API_URL + getJourney({ journey, includeId, pathId }),
-    {
-      method,
-      body,
-      headers,
-    }
-  );
+  const url =
+    API_URL +
+    getJourney({ journey, includeId, pathId }) +
+    buildQueryString(queryParams);
+
+  const result = await fetch(url, {
+    method,
+    body,
+    headers,
+  });
   if (method === "GET" && result.ok) {
     const json = await result.json();
     return json?.data || json;

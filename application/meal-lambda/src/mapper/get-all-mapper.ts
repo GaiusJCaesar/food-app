@@ -19,6 +19,7 @@ const getAllMapper = async (accountId: string): Promise<Meal[]> => {
     const result = await dynamodb
       .query({
         TableName: MEALS_TABLE,
+        IndexName: "accountId-index",
         KeyConditionExpression: "accountId = :aid",
         ExpressionAttributeValues: {
           ":aid": accountId,
