@@ -35,7 +35,7 @@ const authHrefs: HrefConfigs = {
     href: "/app/settings",
     text: "Settings",
   },
-  menu: {
+  cookbook: {
     text: "Cookbook",
     href: "/app/cookbook",
   },
@@ -53,6 +53,10 @@ const otherHrefs: HrefConfigs = {
   createAccount: {
     text: "Your account",
     href: "/app/create-account",
+  },
+  addMeal: {
+    text: "Add meal",
+    href: "/app/cookbook/add",
   },
 };
 

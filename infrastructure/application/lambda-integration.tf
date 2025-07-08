@@ -49,7 +49,7 @@ module "meals_routes" {
   routes = [
     {
       path    = "/meals"
-      methods = ["POST"] # Single POST method on /meals path
+      methods = ["POST", "GET"] # GET / POST method on /meals path
     },
     {
       path    = "/meals/{id}"

@@ -50,7 +50,7 @@ export default function Navbar() {
     mobileLinks: isAuthenticated
       ? [
           authHrefs["home"],
-          authHrefs["menu"],
+          authHrefs["cookbook"],
           authHrefs["plan"],
           authHrefs["lists"],
           authHrefs["settings"],
@@ -100,8 +100,8 @@ export default function Navbar() {
                     isAuthenticated
                       ? [
                           {
-                            ...authHrefs["menu"],
-                            title: authHrefs["menu"].text,
+                            ...authHrefs["cookbook"],
+                            title: authHrefs["cookbook"].text,
                             isLink: true,
                           },
                           {

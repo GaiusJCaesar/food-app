@@ -81,7 +81,7 @@ function Title({
 const linkVariants = cva("scroll-m-20 font-semibold tracking-tight", {
   variants: {
     variant: {
-      menuItem: "text-primary-foreground underline-offset-4 hover:underline",
+      menuItem: "text-foreground underline-offset-4 hover:underline",
     },
     isSelected: {
       true: "text-highlight-foreground",

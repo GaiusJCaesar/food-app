@@ -8,7 +8,7 @@ import QueryProvider from "@/components/providers/query-provider";
 
 // const { publicRuntimeConfig } = getConfig();
 // const version = publicRuntimeConfig?.version;
-
+// https://tailwind-generator.com/card-generator/generator
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -38,6 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
+        id="body"
         className={`${geistSans.variable} ${geistMono.variable} ${happyMonkey.variable} antialiased bg-background`}
       >
         <ThemeProvider

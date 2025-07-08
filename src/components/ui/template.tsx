@@ -11,7 +11,7 @@ const Template = ({ children, title }: TemplateProps) => {
       <Title color="highlight" className="happy-monkey">
         {title}
       </Title>
-      <section className="mt-4 grid gap-4">{children}</section>
+      <section className="mt-4 flex flex-col gap-4">{children}</section>
     </main>
   );
 };

@@ -61,7 +61,19 @@ function Button({
   );
 }
 
+function DefaultButton(props: React.ComponentProps<"button">) {
+  return (
+    <button
+      {...props}
+      className={cn(
+        "bg-card-button text-card-foreground w-full font-bold text-base  p-3 rounded-lg hover:bg-primary active:scale-95 transition-transform transform",
+        props.className
+      )}
+    />
+  );
+}
+
 type ButtonProps = React.ComponentProps<typeof Button>;
 
-export { Button, buttonVariants };
+export { Button, buttonVariants, DefaultButton };
 export type { ButtonProps };

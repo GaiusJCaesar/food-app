@@ -5,7 +5,7 @@ import { API_URL } from "@/constants/apiConfigs";
 interface props {
   method?: RequestInit["method"];
   body?: RequestInit["body"];
-  journey: "users" | "accounts";
+  journey: "users" | "accounts" | "meals";
   pathId?: string;
   includeId?: boolean;
 }
@@ -23,6 +23,8 @@ function getJourney({ journey, includeId, pathId }: JourneyProps) {
       return `/users${id ? `/${id}` : ""}`;
     case "accounts":
       return `/accounts${id ? `/${id}` : ""}`;
+    case "meals":
+      return `/meals${id ? `/${id}` : ""}`;
     default:
       return "/";
   }
