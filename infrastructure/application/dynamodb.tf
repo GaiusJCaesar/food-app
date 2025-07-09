@@ -53,11 +53,6 @@ resource "aws_dynamodb_table" "meals" {
   }
 
   attribute {
-    name = "title"
-    type = "S"
-  }
-
-  attribute {
     name = "accountId"
     type = "S"
   }
