@@ -57,6 +57,11 @@ resource "aws_dynamodb_table" "meals" {
     type = "S"
   }
 
+  attribute {
+    name = "accountId"
+    type = "S"
+  }
+
   global_secondary_index {
     name            = "accountId-index"
     hash_key        = "accountId"
