@@ -72,7 +72,7 @@ module "plans_routes" {
       methods = ["POST", "GET"] # GET / POST method on /meals path
     },
     {
-      path    = "/accounts/{accountId}/plans"
+      path    = "/accounts/{accountId}/plans/{id}"
       methods = ["GET", "PUT", "DELETE"] # Multiple methods on /meals/{id}
     }
   ]
