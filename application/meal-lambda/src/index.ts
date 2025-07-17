@@ -11,7 +11,7 @@ export const handler = async (
 ): Promise<APIGatewayProxyResult> => {
   const httpMethod = event.requestContext.http.method;
   const pathParams = event.pathParameters;
-  const queryParams = event.queryStringParameters;
+  // const queryParams = event.queryStringParameters;
   const body = JSON.parse(event.body ?? "{}");
   switch (httpMethod) {
     case "POST":
@@ -35,8 +35,8 @@ export const handler = async (
             body: { data },
             statusCode: 200,
           });
-        } else if (queryParams && queryParams.accountId) {
-          const data = await getAllMapper(queryParams.accountId);
+        } else if (pathParams && pathParams.accountId) {
+          const data = await getAllMapper(pathParams.accountId);
           return handleReturn({
             body: { data },
             statusCode: 200,

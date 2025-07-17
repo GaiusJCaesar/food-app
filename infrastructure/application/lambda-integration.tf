@@ -48,11 +48,11 @@ module "meals_routes" {
 
   routes = [
     {
-      path    = "/meals"
+      path    = "/accounts/{accountId}/meals"
       methods = ["POST", "GET"] # GET / POST method on /meals path
     },
     {
-      path    = "/meals/{id}"
+      path    = "/accounts/{accountId}/meals/{id}"
       methods = ["GET", "PUT", "DELETE"] # Multiple methods on /meals/{id}
     }
   ]
@@ -68,11 +68,11 @@ module "plans_routes" {
 
   routes = [
     {
-      path    = "/plans"
+      path    = "/accounts/{accountId}/plans"
       methods = ["POST", "GET"] # GET / POST method on /meals path
     },
     {
-      path    = "/plans/{id}"
+      path    = "/accounts/{accountId}/plans"
       methods = ["GET", "PUT", "DELETE"] # Multiple methods on /meals/{id}
     }
   ]
