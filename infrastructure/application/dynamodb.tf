@@ -63,3 +63,20 @@ resource "aws_dynamodb_table" "meals" {
     projection_type = "ALL" # or "KEYS_ONLY" or "INCLUDE" if you want to limit
   }
 }
+
+resource "aws_dynamodb_table" "plans" {
+  name         = "${var.project_name}-${var.env}-plans-table"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "accountId"
+  range_key    = "date"
+
+  attribute {
+    name = "accountId"
+    type = "S"
+  }
+
+  attribute {
+    name = "date"
+    type = "S"
+  }
+}

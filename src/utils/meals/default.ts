@@ -6,7 +6,7 @@ type GroupableItem = {
   group: string;
 };
 
-type SelectOption = {
+export type SelectOption = {
   label: string;
   value: string;
 };

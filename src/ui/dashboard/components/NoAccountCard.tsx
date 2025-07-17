@@ -11,9 +11,9 @@ const NoAccountCard = () => {
   };
   return (
     <div className="bg-primary/50 text-primary-foreground shadow-xs hover:bg-primary/90 p-4 rounded-xl">
-      <Title variant="h3">That's a good start!</Title>
+      <Title variant="h3">That&apos;s a good start!</Title>
       <Paragraph variant="medium">Now time to create your account.</Paragraph>
-      <Link onClick={handler}>Let's create</Link>
+      <Link onClick={handler}>Let&apos;s create</Link>
     </div>
   );
 };

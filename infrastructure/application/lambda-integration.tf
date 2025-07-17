@@ -57,3 +57,23 @@ module "meals_routes" {
     }
   ]
 }
+
+module "plans_routes" {
+  source = "../modules/api_lambda_integration"
+
+  api_id               = aws_apigatewayv2_api.shared_api.id
+  lambda_function_name = aws_lambda_function.plan_lambda.function_name
+  lambda_invoke_arn    = aws_lambda_function.plan_lambda.invoke_arn
+  authorizer_id        = aws_apigatewayv2_authorizer.cognito.id
+
+  routes = [
+    {
+      path    = "/plans"
+      methods = ["POST", "GET"] # GET / POST method on /meals path
+    },
+    {
+      path    = "/plans/{id}"
+      methods = ["GET", "PUT", "DELETE"] # Multiple methods on /meals/{id}
+    }
+  ]
+}

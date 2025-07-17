@@ -16,5 +16,9 @@ locals {
       filename      = "meal-lambda.zip"
       function_name = "meal-lambda"
     }
+    "plan-lambda"   = {
+      filename      = "plan-lambda.zip"
+      function_name = "plan-lambda"
+    }
   }
 }

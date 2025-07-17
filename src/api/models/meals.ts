@@ -1,3 +1,8 @@
+export type ValueLabel = {
+  label: string;
+  value: string;
+};
+
 export type MealPut = {
   accountId: string;
   title: string;
@@ -13,6 +18,6 @@ export type Meal = {
   title: string;
   description?: string;
   isFavourite?: boolean;
-  cuisine?: string;
-  dish?: string;
+  cuisine?: ValueLabel;
+  dish?: ValueLabel;
 };

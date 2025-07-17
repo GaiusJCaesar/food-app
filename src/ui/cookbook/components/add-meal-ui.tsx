@@ -23,18 +23,16 @@ const AddMealUI = ({ ref, accountId }: AddMealUIProps) => {
   const [cuisine, setCuisine] = useState("");
   const [dish, setDish] = useState("");
 
-  const { mutate, data, isPending, isSuccess } = useMealsMutation();
-
-  console.log("data, isPending, isSuccess", data, isPending, isSuccess);
+  const { mutate, isPending, isSuccess } = useMealsMutation();
 
   useEffect(() => {
     if (isSuccess) {
-      ref.current?.close();
       setTitle("");
       setDescription("");
       setIsFavourite(false);
       setCuisine("");
       setDish("");
+      ref.current?.close();
     }
   }, [isSuccess, ref]);
 
@@ -46,9 +44,14 @@ const AddMealUI = ({ ref, accountId }: AddMealUIProps) => {
     <ActionSheet
       ref={ref}
       aria-label="Add a meal sheet"
-      sheetStyle={{ padding: 20 }}
+      sheetStyle={{
+        padding: 20,
+        transition: "2s cubic-bezier(0.4, 0, 0.2, 1)",
+      }}
       mouseEnable={false}
       touchEnable={false}
+      bgTransition="opacity 2s ease-in-out"
+      sheetTransition="transform 2s cubic-bezier(0.22, 1, 0.36, 1)"
     >
       <>
         <div className="text-2xl font-bold   text-card-foreground pb-4">

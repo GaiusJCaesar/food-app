@@ -1,13 +1,12 @@
 "use client";
-
 import { useRedirect } from "@/hooks/useRedirect";
+import PlannerUI from "./planner-ui";
+import { useAccountsQuery } from "@/api/accounts/accountsQuery";
+import { useMealsQuery } from "@/api/meals/mealsQuery";
 import { useUserQuery } from "@/api/users/usersQuery";
 import LoadingPage from "@/components/ui/loading";
-import { useAccountsQuery } from "@/api/accounts/accountsQuery";
-import CookbookUI from "./cookbook-ui";
-import { useMealsQuery } from "@/api/meals/mealsQuery";
 
-const CookbookPage = () => {
+const PlannerPage = () => {
   // Protected
   useRedirect();
 
@@ -26,7 +25,7 @@ const CookbookPage = () => {
     return <LoadingPage pageName="My cookbook" />;
   }
 
-  return <CookbookUI user={user} account={account} meals={meals} />;
+  return <PlannerUI user={user} account={account} meals={meals} />;
 };
 
-export default CookbookPage;
+export default PlannerPage;

@@ -7,7 +7,7 @@ interface TemplateProps extends PropsWithChildren {
 
 const Template = ({ children, title }: TemplateProps) => {
   return (
-    <main className="layout gap-y-4">
+    <main className="layout gap-y-4 mb-8">
       <Title color="highlight" className="happy-monkey">
         {title}
       </Title>

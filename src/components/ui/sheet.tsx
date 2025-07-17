@@ -64,6 +64,7 @@ function SheetContent({
     <SheetPortal>
       <SheetOverlay />
       <SheetPrimitive.Content
+        aria-describedby={undefined}
         data-slot="sheet-content"
         className={cn(sheetVariants({ side }), className)}
         {...props}

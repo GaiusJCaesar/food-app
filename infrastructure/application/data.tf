@@ -12,3 +12,8 @@ data "aws_s3_object" "meal_lambda" {
   bucket = var.s3_bucket
   key    = "lambdas/${var.lambda_configs["meal-lambda"].filename}"
 }
+
+data "aws_s3_object" "plan_lambda" {
+  bucket = var.s3_bucket
+  key    = "lambdas/${var.lambda_configs["plan-lambda"].filename}"
+}

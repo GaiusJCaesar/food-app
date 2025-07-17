@@ -33,7 +33,7 @@ data "aws_iam_policy_document" "user_lambda_dynamo_policy" {
       "dynamodb:Scan",
       "dynamodb:UpdateItem"
     ]
-    resources = [aws_dynamodb_table.users.arn, aws_dynamodb_table.accounts.arn, aws_dynamodb_table.meals.arn, "${aws_dynamodb_table.meals.arn}/index/accountId-index"]
+    resources = [aws_dynamodb_table.users.arn, aws_dynamodb_table.accounts.arn, aws_dynamodb_table.meals.arn, "${aws_dynamodb_table.meals.arn}/index/accountId-index", aws_dynamodb_table.plans.arn]
   }
 }
 

@@ -6,8 +6,8 @@ import { APIError, QueryOptions } from "../models/defaults";
 export const useMealsQuery = ({
   accountId,
   ...options
-}: { accountId: string } & QueryOptions<Meal>): UseQueryResult<
-  Meal,
+}: { accountId: string } & QueryOptions<Meal[]>): UseQueryResult<
+  Meal[],
   APIError
 > => {
   return useQuery({
@@ -18,6 +18,6 @@ export const useMealsQuery = ({
         method: "GET",
         journey: "meals",
         queryParams: { accountId },
-      })) as Meal,
+      })) as Meal[],
   });
 };

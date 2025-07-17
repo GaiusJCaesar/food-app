@@ -1,5 +1,9 @@
 import { fetcher } from "@/utils/fetchService";
-import { useMutation, UseMutationResult } from "@tanstack/react-query";
+import {
+  useMutation,
+  UseMutationResult,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { APIError } from "../models/defaults";
 import { MealPut } from "../models/meals";
 
@@ -8,6 +12,7 @@ export const useMealsMutation = (): UseMutationResult<
   APIError,
   MealPut
 > => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (body: MealPut) =>
       await fetcher({
@@ -16,5 +21,7 @@ export const useMealsMutation = (): UseMutationResult<
         includeId: false,
         body: JSON.stringify(body),
       }),
+    onSuccess: async () =>
+      await queryClient.invalidateQueries({ queryKey: ["meals"] }),
   });
 };
