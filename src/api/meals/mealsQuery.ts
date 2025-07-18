@@ -16,7 +16,7 @@ export const useMealsQuery = ({
     queryFn: async () =>
       (await fetcher({
         method: "GET",
-        journey: "meals",
+        path: `/accounts/${accountId}/meals`,
         queryParams: { accountId },
       })) as Meal[],
   });

@@ -18,20 +18,22 @@ const getAllMapper = async (
 
   try {
     const results = await Promise.all(
-      datesResults.map((date) =>
-        dynamodb
+      datesResults.map((date) => {
+        const key = { accountId, date };
+        console.log("Querying key:", key);
+        return dynamodb
           .get({
             TableName: PLANS_TABLE,
-            Key: { accountId, date },
+            Key: key,
           })
-          .promise()
-      )
+          .promise();
+      })
     );
 
-    const filtered = results
-      .map((res) => res.Item)
-      .filter((item): item is Record<string, unknown> => !!item);
-    return filtered;
+    // const filtered = results
+    //   .map((res) => res.Item)
+    //   .filter((item): item is Record<string, unknown> => !!item);
+    return results;
   } catch (error) {
     console.error("Error fetching plans:", error);
     throw new Error("Failed to retrieve plans");

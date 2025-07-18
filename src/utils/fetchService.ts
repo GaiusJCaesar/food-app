@@ -5,30 +5,8 @@ import { API_URL } from "@/constants/apiConfigs";
 interface props {
   method?: RequestInit["method"];
   body?: RequestInit["body"];
-  journey: "users" | "accounts" | "meals";
+  path: string;
   queryParams?: Record<string, string>;
-  pathId?: string;
-  includeId?: boolean;
-}
-
-interface JourneyProps {
-  journey: props["journey"];
-  includeId: props["includeId"];
-  pathId: props["pathId"];
-}
-
-function getJourney({ journey, includeId, pathId }: JourneyProps) {
-  const id = includeId ? getUser()?.profile.sub : pathId;
-  switch (journey) {
-    case "users":
-      return `/users${id ? `/${id}` : ""}`;
-    case "accounts":
-      return `/accounts${id ? `/${id}` : ""}`;
-    case "meals":
-      return `/meals${id ? `/${id}` : ""}`;
-    default:
-      return "/";
-  }
 }
 
 const buildQueryString = (queryParams?: props["queryParams"]): string => {
@@ -43,20 +21,15 @@ const buildQueryString = (queryParams?: props["queryParams"]): string => {
 export const fetcher = async ({
   method = "GET",
   body,
-  journey,
-  includeId,
+  path,
   queryParams,
-  pathId,
 }: props) => {
   const token = getUser()?.id_token;
   const headers: RequestInit["headers"] = {
     Authorization: `Bearer ${token}`,
   };
 
-  const url =
-    API_URL +
-    getJourney({ journey, includeId, pathId }) +
-    buildQueryString(queryParams);
+  const url = API_URL + path + buildQueryString(queryParams);
 
   const result = await fetch(url, {
     method,

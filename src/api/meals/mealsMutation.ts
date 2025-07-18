@@ -17,8 +17,7 @@ export const useMealsMutation = (): UseMutationResult<
     mutationFn: async (body: MealPut) =>
       await fetcher({
         method: "POST",
-        journey: "meals",
-        includeId: false,
+        path: `/accounts/${body.accountId}/meals`,
         body: JSON.stringify(body),
       }),
     onSuccess: async () =>

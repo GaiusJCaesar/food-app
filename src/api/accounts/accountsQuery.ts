@@ -16,9 +16,7 @@ export const useAccountsQuery = ({
     queryFn: async () =>
       (await fetcher({
         method: "GET",
-        journey: "accounts",
-        includeId: false,
-        pathId: id,
+        path: `/accounts/${id}`,
       })) as Account,
   });
 };

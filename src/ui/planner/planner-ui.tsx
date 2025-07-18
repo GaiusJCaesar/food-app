@@ -12,6 +12,7 @@ import AddPlanUI from "./components/add-plan-ui";
 import { User } from "@/api/models/users";
 import { Account } from "@/api/models/accounts";
 import { isMobile } from "react-device-detect";
+import { Plan } from "@/api/models/plans";
 
 const Card = ({ meal }: { meal: Meal }) => {
   return (
@@ -28,9 +29,10 @@ interface PlannerUIProps {
   user: User | undefined;
   account: Account | undefined;
   meals: Meal[] | undefined;
+  plans: Plan[] | undefined;
 }
 
-const PlannerUI = ({ account }: PlannerUIProps) => {
+const PlannerUI = ({ account, meals, plans }: PlannerUIProps) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const actionSheetRef = useRef<ActionSheetRef>(null);
@@ -41,9 +43,22 @@ const PlannerUI = ({ account }: PlannerUIProps) => {
     return label;
   }, [selectedDate]);
 
+  const selectedDatePlans = useMemo(() => {
+    console.log(plans);
+    if (!plans?.length) return null;
+    return plans?.find(
+      (plan) => plan.date !== format(selectedDate, "yyyy-MM-dd")
+    );
+  }, [plans, selectedDate]);
+
   return (
     <Template title="My planner">
-      <AddPlanUI ref={actionSheetRef} accountId={account?.id || ""} />
+      <AddPlanUI
+        ref={actionSheetRef}
+        selectedDate={format(selectedDate, "yyyy-MM-dd")}
+        accountId={account?.id || ""}
+        meals={meals}
+      />
       <DateSelector
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
@@ -54,7 +69,8 @@ const PlannerUI = ({ account }: PlannerUIProps) => {
           New meal
         </DefaultButton>
       )}
-      <Card meal={{ title: "Spaghetti", id: "123", accountId: "123" }} />
+      selected plan: {selectedDatePlans?.date}
+      <Card meal={{ title: "example", id: "123", accountId: "123" }} />
       <PinnedButton>
         <DefaultButton onClick={() => actionSheetRef.current?.open()}>
           New meal
