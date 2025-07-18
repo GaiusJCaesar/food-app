@@ -32,7 +32,10 @@ const getAllMapper = async (
 
     const filtered = results
       .map((res) => res.Item)
-      .filter((item): item is Record<string, unknown> => !!item);
+      .filter(
+        (item): item is Record<string, unknown> =>
+          !!item && Object.keys(item).length > 0
+      );
     return filtered;
   } catch (error) {
     console.error("Error fetching plans:", error);
