@@ -27,7 +27,11 @@ const getAllMapper = async (
           .promise()
       )
     );
-    return results as unknown[];
+
+    const filtered = results
+      .map((res) => res.Item)
+      .filter((item): item is Record<string, unknown> => !!item);
+    return filtered;
   } catch (error) {
     console.error("Error fetching plans:", error);
     throw new Error("Failed to retrieve plans");
